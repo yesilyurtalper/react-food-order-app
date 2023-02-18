@@ -62,24 +62,13 @@ const AppProvider = (props) => {
 
   const [cartIsShownSt, setCartIsShownSt] = useState(false);
   
-  const [cartState, dispatchCartAction] = useReducer(
-    stateReducer,
-    defaultCartState
-  );
-
-  const addItemToCartHandler = (item) => {
-    dispatchCartAction({ type: 'ADD', item: item });
-  };
-
-  const removeItemFromCartHandler = (id) => {
-    dispatchCartAction({ type: 'REMOVE', id: id });
-  };
+  const [cartState, dispatchCartAction] = useReducer(stateReducer, defaultCartState);
 
   const appContext = {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
-    addItem: addItemToCartHandler,
-    removeItem: removeItemFromCartHandler,
+    addItem: (item) => { dispatchCartAction({ type: 'ADD', item: item }); },
+    removeItem: (id) => {dispatchCartAction({ type: 'REMOVE', id: id }); },
     cartIsShown: cartIsShownSt,
     setCartIsShown: (status) => {setCartIsShownSt(status);}
   };
